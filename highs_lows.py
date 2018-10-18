@@ -1,7 +1,7 @@
 import csv
 from matplotlib import pyplot as plt
 from datetime import datetime
-file_name = "sitka_weather_07-2014.csv"
+file_name = "death_valley_2014.csv"
 # Handle error if file is not available to be read
 with open(file_name) as f:
     reader = csv.reader(f)
@@ -14,12 +14,16 @@ with open(file_name) as f:
     #Read data from columns 0, 1, 3 in CSV file(Date, High Temperatures, and low temperatures )
     dates, highs, lows = [], [], []
     for row in reader:
-        current_date = datetime.strptime(row[0], "%Y-%m-%d")
-        high = int(row[1])
-        low = int(row[3])
-        highs.append(high)
-        lows.append(low)
-        dates.append(current_date)
+        try:
+            current_date = datetime.strptime(row[0], "%Y-%m-%d")
+            high = int(row[1])
+            low = int(row[3])
+        except ValueError:
+            print(current_date, "missing data")
+        else:
+            highs.append(high)
+            lows.append(low)
+            dates.append(current_date)
     print (highs)   #Print to show data is displaying correctly
 
 #Plot data
